@@ -1,10 +1,10 @@
 import React from "react";
 import {MdDeleteForever} from "react-icons/md";
 
-const StickyNote = ({date, text, noteid, className = ""}) => {
+const StickyNote = ({date, text, noteid, color}) => {
     return (
         <>
-            <div className={`h-52 border-r-10 p-2 flex flex-col justify-between ${className}`}>
+            <div className={`h-52 border-r-10 p-2 flex flex-col justify-between ${color}`}>
                 <span>
                     {text}
                 </span>

@@ -10,31 +10,31 @@ export  default function Notes() {
             text: "First note",
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "yellow-500"
+            color: "bg-yellow-500"
         },
         {
             text: "Second note",
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "yellow-500"
+            color: "bg-yellow-500"
         },
         {
             text: "Third note",
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "yellow-500"
+            color: "bg-yellow-500"
         },
         {
             text: "Forth note",
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "yellow-500"
+            color: "bg-yellow-500"
         },
         {
             text: "Fifth note",
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "yellow-500"
+            color: "bg-yellow-500"
         }
     ]);
     return (
