@@ -11,7 +11,6 @@ const checkloginuser = async () => {
             body : userId
           });
         const data = await response.text();
-        console.log(data);
         let loggedIn = data;
 
         if (loggedIn == "false")

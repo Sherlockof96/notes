@@ -24,7 +24,6 @@ export  default function Notes() {
 
         const map = new Map(Object.entries(await response.json()));
         const result = Array.from(map.values());
-        console.log(result);
         setNotes([
             ...result
         ]);

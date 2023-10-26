@@ -49,7 +49,7 @@ const StickyNote = ({date, text, id, color, handleDeleteNote, handleModifyConten
                     ) : 
                     
                     (
-                        <span className="m-1 break-all">
+                        <span className="m-1 break-all overflow-hidden hover:overflow-auto">
                             {text}
                         </span>
                     )
