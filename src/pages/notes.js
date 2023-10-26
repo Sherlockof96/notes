@@ -47,8 +47,8 @@ export  default function Notes() {
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
 
-                {/* <AddStickyNote /> */}
                 <StickyNoteList notes={notes}/>
+                <AddStickyNote />
 
             </main>
         </>

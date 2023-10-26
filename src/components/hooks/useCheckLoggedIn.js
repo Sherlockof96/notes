@@ -15,7 +15,7 @@ const CheckLoggedIn = ({route}) => {
         console.log(data);
         let loggedIn = data;
 
-        if (loggedIn == "false" || loggedIn != "admin")
+        if (loggedIn == "false")
         {
             if (route == undefined)
             {
@@ -24,6 +24,17 @@ const CheckLoggedIn = ({route}) => {
             Cookie.set('redirectURL', route, { expires: 1 , domain: '.kavishdoshi.com'})
             window.location.href = "https://login.kavishdoshi.com/login"
         }
+
+        if (loggedIn != "admin")
+        {
+            if (route == undefined)
+            {
+                route = "https://kavishdoshi.com"
+            }
+            Cookie.set('redirectURL', route, { expires: 1 , domain: '.kavishdoshi.com'})
+            window.location.href = "https://login.kavishdoshi.com/login"
+        }
+
     }, [])
 }
 
