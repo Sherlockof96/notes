@@ -1,42 +1,51 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import TransitionEffect from '@/components/TransitionEffect'
-import AddStickyNote from '@/components/AddStickyNote'
 import StickyNoteList from '@/components/StickNoteList'
+import Cookies from 'js-cookie'
 
 export  default function Notes() {
-    const [notes, setNotes] = useState([
+
+    const userHash = Cookies.get('UserId');
+    const [notes, setNotes] = useState([]);
+
+    const getNotes = async () => {
+        const response = await fetch(`https://loginlogoutbackend.azurewebsites.net/notes/get`,
         {
-            text: "First note",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: userHash
+        });
+        const data = await response.json();
+        setNotes(data);
+    }
+
+    const handleAddNote = async (note) => {
+
+        const data = {
+            note: note,
             date: new Date().toLocaleDateString(),
             id: 1,
-            color: "bg-yellow-500"
-        },
-        {
-            text: "Second note",
-            date: new Date().toLocaleDateString(),
-            id: 1,
-            color: "bg-yellow-500"
-        },
-        {
-            text: "Third note",
-            date: new Date().toLocaleDateString(),
-            id: 1,
-            color: "bg-yellow-500"
-        },
-        {
-            text: "Forth note",
-            date: new Date().toLocaleDateString(),
-            id: 1,
-            color: "bg-yellow-500"
-        },
-        {
-            text: "Fifth note",
-            date: new Date().toLocaleDateString(),
-            id: 1,
-            color: "bg-yellow-500"
+            colour: "bg-yellow-500",
+            userhash: userHash
         }
-    ]);
+
+        const response = await fetch('https://loginlogoutbackend.azurewebsites.net/notes/add', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        setNotes([
+            ...notes,
+            data
+        ]);
+    }
     return (
         <>
             <Head>
@@ -46,10 +55,7 @@ export  default function Notes() {
             <TransitionEffect />
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
-
-                <StickyNoteList notes={notes}/>
-                <AddStickyNote />
-
+                <StickyNoteList notes={notes} handleAddNote={handleAddNote}/>
             </main>
         </>
     )

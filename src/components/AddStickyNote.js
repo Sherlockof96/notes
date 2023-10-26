@@ -1,17 +1,30 @@
 import React from "react";
-import Layout from "./Layout";
-import {MdDeleteForever} from "react-icons/md";
+import { useState } from "react";
 
-const AddStickyNote = ({color, date, text}) => {
+const AddStickyNote = ({color, hoverColor, date, handleAddNote}) => {
+    const [noteText, setNoteText] = useState('');
+    const charLimit = 1000;
+    const handleChange = (event) => {
+        if(charLimit - event.target.value.length >= 0)
+        {
+            setNoteText(event.target.value);
+        }
+    };
+
+    const handleSaveClick = async () => {
+        if(noteText.trim().length > 0) 
+        {
+            await handleAddNote(noteText);
+            setNoteText('');
+        }
+    };
     return (
         <>
             <div className={`h-52 border-r-10 p-2 flex flex-col justify-between ${color}`}>
-                <span>
-                    {text}
-                </span>
+                <textarea value={noteText} onChange={handleChange} className={`border-none resize-none outline-none  ${color}`} rows="8" columns="10" placeholder="Type to add note"></textarea>
                 <div className="flex align-middle justify-between">
-                    <small>{date}</small>
-                    <MdDeleteForever className="delete-icon" size="1.3em" />
+                    <small>{charLimit - noteText.length} Remaining</small>
+                    <button onClick={handleSaveClick} className={`bg-gray-100 border-none rounded-xl ${hoverColor} p-1`}>Save</button>
                 </div>
             </div>
         </>
