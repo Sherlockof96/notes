@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect, use } from 'react'
 import TransitionEffect from '@/components/TransitionEffect'
 import StickyNoteList from '@/components/StickNoteList'
 import Cookies from 'js-cookie'
@@ -10,6 +10,8 @@ export  default function Notes() {
     const [notes, setNotes] = useState([]);
 
     const getNotes = async () => {
+
+          
         const response = await fetch(`https://loginlogoutbackend.azurewebsites.net/notes/get`,
         {
             method: 'POST',
@@ -18,8 +20,13 @@ export  default function Notes() {
             },
             body: userHash
         });
-        const data = await response.json();
-        setNotes(data);
+
+        const map = new Map(Object.entries(await response.json()));
+        const result = Array.from(map.values());
+        console.log(result);
+        setNotes([
+            ...result
+        ]);
     }
 
     const handleAddNote = async (note) => {
@@ -32,7 +39,7 @@ export  default function Notes() {
             userhash: userHash
         }
 
-        const response = await fetch('https://loginlogoutbackend.azurewebsites.net/notes/add', 
+        await fetch('https://loginlogoutbackend.azurewebsites.net/notes/add', 
         {
             method: 'POST',
             headers: {
@@ -41,11 +48,33 @@ export  default function Notes() {
             body: JSON.stringify(data)
         });
 
-        setNotes([
-            ...notes,
-            data
-        ]);
+        await getNotes();
     }
+
+    const handleDeleteNote = async (id) => {
+
+        const data = {
+            id: id,
+            userhash: userHash
+        }
+        await fetch('https://loginlogoutbackend.azurewebsites.net/notes/delete', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        await getNotes();
+        
+    }
+
+    useEffect(() => {
+        getNotes();
+    }, []);
+
+
     return (
         <>
             <Head>
@@ -55,7 +84,7 @@ export  default function Notes() {
             <TransitionEffect />
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
-                <StickyNoteList notes={notes} handleAddNote={handleAddNote}/>
+                <StickyNoteList notes={notes} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
             </main>
         </>
     )

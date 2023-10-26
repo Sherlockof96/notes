@@ -2,11 +2,8 @@ import Cookie from 'js-cookie'
 import { useEffect } from 'react'
 import checkLoggedIn from '@/pages/api/checkLoggedIn';
 
-
-const CheckLoggedIn = ({route}) => {
-    useEffect(async () => {
-        
-        const userId = Cookie.get('UserId') ? Cookie.get('UserId') : "-1";
+const checkloginuser = async ({route}) => {
+    const userId = Cookie.get('UserId') ? Cookie.get('UserId') : "-1";
         const response = await fetch(checkLoggedIn, {
             method : 'POST',
             body : userId
@@ -34,6 +31,13 @@ const CheckLoggedIn = ({route}) => {
             Cookie.set('redirectURL', route, { expires: 1 , domain: '.kavishdoshi.com'})
             window.location.href = "https://login.kavishdoshi.com/login"
         }
+}
+
+
+const CheckLoggedIn = ({route}) => {
+    useEffect(() => {
+        
+        checkloginuser(route);
 
     }, [])
 }
