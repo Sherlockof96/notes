@@ -3,6 +3,7 @@ import { useState, useEffect, use } from 'react'
 import TransitionEffect from '@/components/TransitionEffect'
 import StickyNoteList from '@/components/StickNoteList'
 import Cookies from 'js-cookie'
+import SearchBar from '@/components/SearchBar'
 
 export  default function Notes() {
 
@@ -70,10 +71,33 @@ export  default function Notes() {
         
     }
 
+    const handleChangeColour = async (id, colour, note) => {
+            
+            const data = {
+                id: id,
+                colour: colour,
+                note: note,
+                date : new Date().toLocaleDateString(),
+                userhash: userHash
+            }
+    
+            await fetch('https://loginlogoutbackend.azurewebsites.net/notes/update', 
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            await getNotes();
+    }
+
     useEffect(() => {
         getNotes();
     }, []);
 
+    const [searchText, setSearchText] = useState('');
 
     return (
         <>
@@ -84,7 +108,8 @@ export  default function Notes() {
             <TransitionEffect />
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
-                <StickyNoteList notes={notes} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
+                <SearchBar handleSearchNote={setSearchText} />
+                <StickyNoteList notes={notes.filter((note)=>note.note.toLowerCase().includes(searchText))} handleChangeColour={handleChangeColour} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
             </main>
         </>
     )
