@@ -14,11 +14,8 @@ const CheckLoggedIn = ({route}) => {
         const data = await response.text();
         console.log(data);
         let loggedIn = data;
-        // if (Cookie.get('Auth') == 'Allowed')
-        // {
-        //     loggedIn = "true"
-        // }
-        if (loggedIn == "false")
+
+        if (loggedIn == "false" || loggedIn != "admin")
         {
             if (route == undefined)
             {
