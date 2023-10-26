@@ -109,7 +109,7 @@ export  default function Notes() {
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
                 <SearchBar handleSearchNote={setSearchText} />
-                <StickyNoteList notes={notes.filter((note)=>note.note.toLowerCase().includes(searchText))} handleModifyContent={handleModifyContent} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
+                <StickyNoteList notes={notes.filter((note)=>note.note.toLowerCase().includes(searchText.toLowerCase()))} handleModifyContent={handleModifyContent} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
             </main>
         </>
     )
