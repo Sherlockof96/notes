@@ -4,7 +4,7 @@ import DropDownColor from "./DropdownColor";
 
 const AddStickyNote = ({color, hoverColor, handleAddNote}) => {
     const [noteText, setNoteText] = useState('');
-    const [colour, setColour] = useState('');
+    const [colour, setColour] = useState('bg-yellow-400');
     const charLimit = 1000;
 
     const colorChange = async (colour) => {
