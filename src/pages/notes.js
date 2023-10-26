@@ -30,13 +30,13 @@ export  default function Notes() {
         ]);
     }
 
-    const handleAddNote = async (note) => {
+    const handleAddNote = async (note, colour) => {
 
         const data = {
             note: note,
             date: new Date().toLocaleDateString(),
             id: 1,
-            colour: "bg-yellow-500",
+            colour: colour,
             userhash: userHash
         }
 
