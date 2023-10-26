@@ -71,8 +71,8 @@ export  default function Notes() {
         
     }
 
-    const handleChangeColour = async (id, colour, note) => {
-            
+    const handleModifyContent = async (id, note, colour) => {
+                
             const data = {
                 id: id,
                 colour: colour,
@@ -109,7 +109,7 @@ export  default function Notes() {
 
             <main className='text-dark w-full min-h-screen dark:text-light'>
                 <SearchBar handleSearchNote={setSearchText} />
-                <StickyNoteList notes={notes.filter((note)=>note.note.toLowerCase().includes(searchText))} handleChangeColour={handleChangeColour} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
+                <StickyNoteList notes={notes.filter((note)=>note.note.toLowerCase().includes(searchText))} handleModifyContent={handleModifyContent} handleAddNote={handleAddNote} handleDeleteNote={handleDeleteNote}/>
             </main>
         </>
     )
