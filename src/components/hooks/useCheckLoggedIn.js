@@ -2,7 +2,9 @@ import Cookie from 'js-cookie'
 import { useEffect } from 'react'
 import checkLoggedIn from '@/pages/api/checkLoggedIn';
 
-const checkloginuser = async ({route}) => {
+let router = "https://kavishdoshi.com"
+
+const checkloginuser = async () => {
     const userId = Cookie.get('UserId') ? Cookie.get('UserId') : "-1";
         const response = await fetch(checkLoggedIn, {
             method : 'POST',
@@ -14,21 +16,21 @@ const checkloginuser = async ({route}) => {
 
         if (loggedIn == "false")
         {
-            if (route == undefined)
+            if (router == undefined)
             {
-                route = "https://kavishdoshi.com"
+                router = "https://kavishdoshi.com"
             }
-            Cookie.set('redirectURL', route, { expires: 1 , domain: '.kavishdoshi.com'})
+            Cookie.set('redirectURL', router, { expires: 1 , domain: '.kavishdoshi.com'})
             window.location.href = "https://login.kavishdoshi.com/login"
         }
 
         if (loggedIn != "admin")
         {
-            if (route == undefined)
+            if (router == undefined)
             {
-                route = "https://kavishdoshi.com"
+                router = "https://kavishdoshi.com"
             }
-            Cookie.set('redirectURL', route, { expires: 1 , domain: '.kavishdoshi.com'})
+            Cookie.set('redirectURL', router, { expires: 1 , domain: '.kavishdoshi.com'})
             window.location.href = "https://login.kavishdoshi.com/login"
         }
 }
@@ -36,8 +38,8 @@ const checkloginuser = async ({route}) => {
 
 const CheckLoggedIn = ({route}) => {
     useEffect(() => {
-        
-        checkloginuser(route);
+        router = route;
+        checkloginuser();
 
     }, [])
 }
